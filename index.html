@@ -8,8 +8,9 @@
     body { font-family: sans-serif; padding: 20px; }
     #map-container { position: relative; display: inline-block; }
     #map { width: 100%; max-width: 1000px; border: 1px solid #ccc; }
-    .highlight-path { position: absolute; background: blue; height: 4px; }
+    .highlight-path { position: absolute; background: rgba(0, 0, 255, 0.5); height: 4px; }
     .controls { margin-bottom: 20px; }
+    label { margin-right: 10px; }
   </style>
 </head>
 <body>
@@ -21,10 +22,13 @@
     <label>Ending location:
       <select id="end-room"></select>
     </label>
+    <label>
+      <input type="checkbox" id="accessible-route"> Accessibility Route (Avoid Stairs)
+    </label>
     <button onclick="findRoute()">Find Route</button>
   </div>
   <div id="map-container">
-    <img id="map" src="clean_clarity_building_map_V4.jpg" alt="Holmdel Map">
+    <img id="map" src="Untitled_presentation.jpg" alt="Holmdel Map">
   </div>
 
   <script>
@@ -50,7 +54,14 @@
     function findRoute() {
       const start = startSelect.value;
       const end = endSelect.value;
-      alert(`Simulating route from ${start} to ${end}. Visual overlays will go here in full version.`);
+      const accessible = document.getElementById("accessible-route").checked;
+      let message = `Routing from ${start} to ${end}`;
+      if (accessible) {
+        message += " using accessibility mode (avoiding stairs).";
+      } else {
+        message += ".";
+      }
+      alert(message + " Visual path overlay will be included in full version.");
     }
   </script>
 </body>
