@@ -1,16 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Holmdel High Interactive Map</title>
   <style>
     body { font-family: sans-serif; padding: 20px; }
     #map-container { position: relative; display: inline-block; }
     #map { width: 100%; max-width: 1000px; border: 1px solid #ccc; }
-    .highlight-path { position: absolute; background: rgba(0, 0, 255, 0.5); height: 4px; }
+    canvas.route-line { position: absolute; top: 0; left: 0; pointer-events: none; }
     .controls { margin-bottom: 20px; }
-    label { margin-right: 10px; }
   </style>
 </head>
 <body>
@@ -23,46 +21,14 @@
       <select id="end-room"></select>
     </label>
     <label>
-      <input type="checkbox" id="accessible-route"> Accessibility Route (Avoid Stairs)
+      <input type="checkbox" id="accessible-mode"> Accessibility Mode
     </label>
     <button onclick="findRoute()">Find Route</button>
   </div>
   <div id="map-container">
-    <img id="map" src="Untitled_presentation.jpg" alt="Holmdel Map">
+    <img id="map" src="map.jpg" alt="School Map">
+    <canvas id="route-canvas" class="route-line"></canvas>
   </div>
-
-  <script>
-    const rooms = [
-      "204", "205", "207", "208", "106", "100", "101", "143", "142", "141", "144", "145", "146", "147", "148", "149", "150", "151", "152", "153", "154",
-      "303B", "301", "302", "Commons", "Auditorium", "Main Gym", "New Gym", "Nurse", "306", "307", "HIVE", "310", "313", "314", "315", "303", "MPR", "Media Center",
-      "Fitness Center", "401", "402", "403", "404", "405", "406", "407", "408", "409", "410", "411", "412", "601", "602", "603", "604", "801", "802", "803", "804",
-      "501", "502", "503", "504", "505", "506", "507", "509", "510", "511", "512", "Counselor Office", "702", "703", "704", "901", "902", "903", "904", "Upper Gym", "Upper Library"
-    ];
-
-    const startSelect = document.getElementById("start-room");
-    const endSelect = document.getElementById("end-room");
-
-    rooms.forEach(room => {
-      const option1 = document.createElement("option");
-      const option2 = document.createElement("option");
-      option1.text = option2.text = room;
-      option1.value = option2.value = room;
-      startSelect.add(option1);
-      endSelect.add(option2);
-    });
-
-    function findRoute() {
-      const start = startSelect.value;
-      const end = endSelect.value;
-      const accessible = document.getElementById("accessible-route").checked;
-      let message = `Routing from ${start} to ${end}`;
-      if (accessible) {
-        message += " using accessibility mode (avoiding stairs).";
-      } else {
-        message += ".";
-      }
-      alert(message + " Visual path overlay will be included in full version.");
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
